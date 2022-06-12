@@ -1,6 +1,7 @@
 package com.example.cryptoapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<CurrencyRVModel> currencyRVModelArrayList;
     private CurrencyRVAdapter currencyRVAdapter;
 
+    BottomNavigationView bottomNav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +58,30 @@ public class MainActivity extends AppCompatActivity {
         currenciesRV.setAdapter(currencyRVAdapter);
         getCurrencyData();
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav.setSelectedItemId(R.id.home);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+
+                    case R.id.home:
+                        return true;
+                    case R.id.info:
+                        startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
 
         searchEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,26 +101,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Activity selectedActivity = null;
 
-                    switch (item.getItemId()){
-                        case R.id.user:
-                            //selectedAc;
-                            break;
-                        case R.id.home:
-                            //selectedFragment = null;
-                            break;
-
-                    }
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                    return true;
-                }
-            };
 
 
     private void filterCurrencies(String currency){

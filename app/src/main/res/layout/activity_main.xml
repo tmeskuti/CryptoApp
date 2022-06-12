@@ -18,11 +18,10 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVCurrencies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idEditSearch"
-        android:id="@+id/idRVCurrencies"
-        />
+        android:layout_below="@id/idEditSearch" />
 
     <ProgressBar
         android:id="@+id/idPBLoading"

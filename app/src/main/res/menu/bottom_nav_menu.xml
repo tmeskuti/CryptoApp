@@ -5,8 +5,8 @@
         android:title="Home"
         android:icon="@drawable/ic_home_svgrepo_com"/>
     <item
-        android:id="@+id/fav"
-        android:title="Favourites"
+        android:id="@+id/info"
+        android:title="Info"
         android:icon="@drawable/ic_star_svgrepo_com"/>
     <item
         android:id="@+id/user"
