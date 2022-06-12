@@ -19,6 +19,7 @@
             android:name=".UserActivity"
             android:exported="false" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterUser"/>
         <activity
             android:name=".LogInActivity"
             android:exported="true" >

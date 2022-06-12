@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextFullName, editTextEmail, editTextPassword;
-    Button register;
+    private TextView register;
 
     private FirebaseAuth mAuth;
 
@@ -28,11 +28,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register_user);
 
         mAuth = FirebaseAuth.getInstance();
 
-        register = (Button) findViewById(R.id.registerUser);
+        register = (TextView) findViewById(R.id.registerUser);
         register.setOnClickListener(this);
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
@@ -42,14 +42,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.registerUser:
-                registerUser();
-                break;
-        }
-    }
 
     private void registerUser() {
         String name = editTextFullName.getText().toString().trim();
@@ -78,7 +70,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (password.length()<6){
+        if (password.length() < 6) {
             editTextPassword.setError("Password must be at least 6 chara cters!");
             editTextPassword.requestFocus();
             return;
@@ -90,7 +82,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             User user = new User(name, email);
 
                             FirebaseDatabase.getInstance().getReference("Users")
@@ -99,17 +91,26 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 
-                                            if(task.isSuccessful())
+                                            if (task.isSuccessful())
                                                 Toast.makeText(RegisterUser.this, "User registered successfully!", Toast.LENGTH_LONG).show();
                                             else
                                                 Toast.makeText(RegisterUser.this, "Failed to register user!", Toast.LENGTH_LONG).show();
 
                                         }
                                     });
-                        }else
+                        } else
                             Toast.makeText(RegisterUser.this, "Failed to register user!", Toast.LENGTH_LONG).show();
 
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.registerUser:
+                registerUser();
+                break;
+        }
     }
 }
